@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Button</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #1a1a1a; font-family: sans-serif; }
+        #btn { 
+            width: 250px; height: 250px; border-radius: 50%; border: none;
+            background: radial-gradient(#ff4d4d, #b30000);
+            box-shadow: 0 10px #660000, 0 20px 30px rgba(0,0,0,0.5);
+            color: white; font-size: 1.5rem; font-weight: bold; cursor: pointer;
+            active: transform: translateY(10px);
+        }
+        #btn:active { transform: translateY(5px); box-shadow: 0 5px #660000; }
+    </style>
+</head>
+<body>
+
+    <button id="btn" onclick="panggilAbang()">KECEMASAN<br>PANGGIL ABANG</button>
+
+    <script>
+        function panggilAbang() {
+            const topic = 'emergency_bini_panggil_123'; // TUKAR NI JADI UNIK
+            
+            fetch(`https://ntfy.sh/${topic}`, {
+                method: 'POST',
+                body: 'ABANG! TURUN SEKARANG! BINI PANGGIL!', 
+                headers: {
+                    'Title': 'AMARAN KECEMASAN',
+                    'Priority': '5', // Max priority
+                    'Tags': 'rotating_light,urgent'
+                }
+            })
+            .then(() => alert('Signal dah hantar! Tunggu abang datang berlari.'))
+            .catch(() => alert('Alamak, internet problem!'));
+        }
+    </script>
+</body>
+</html>
